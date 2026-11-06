@@ -9,6 +9,7 @@ package main;
  * @author abedn
  */
 import view.BarangView;
+import controller.BarangController;
 import javax.swing.SwingUtilities;
 
 public class Main {
@@ -17,7 +18,13 @@ public class Main {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
+                // 1. Buat View
                 BarangView view = new BarangView();
+
+                // 2. Buat Controller dan masukkan View ke dalamnya
+                new BarangController(view);
+
+                // 3. Tampilin View
                 view.setVisible(true);
             }
         });
