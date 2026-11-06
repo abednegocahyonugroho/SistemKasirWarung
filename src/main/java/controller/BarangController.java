@@ -20,7 +20,7 @@ public class BarangController {
 
     private final BarangView view;
 
-    // Constructor menerima View
+    // Constructor
     public BarangController(BarangView view) {
         this.view = view;
 
@@ -40,6 +40,41 @@ public class BarangController {
             @Override
             public void actionPerformed(ActionEvent e) {
                 clearForm();
+            }
+        });
+
+        // aksi untuk tombol Hapus
+        view.addHapusListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                hapusData();
+            }
+
+            // Method untuk memproses hapus data
+            private void hapusData() {
+                int selectedRow = view.getTable().getSelectedRow();
+
+                if (selectedRow != -1) {
+                    // Ambil ID Barang dari kolom pertama (index 0) pada baris yang dipilih
+                    String id = (String) view.getTable().getValueAt(selectedRow, 0);
+                    String nama = (String) view.getTable().getValueAt(selectedRow, 1);
+
+                    // Pop up konfirmasi
+                    int konfirmasi = JOptionPane.showConfirmDialog(
+                            view,
+                            "Apakah Anda yakin ingin menghapus barang '" + nama + "' (ID: " + id + ")?",
+                            "Konfirmasi Hapus",
+                            JOptionPane.YES_NO_OPTION
+                    );
+
+                    if (konfirmasi == JOptionPane.YES_OPTION) {
+                        Barang.deleteBarang(id);
+                        JOptionPane.showMessageDialog(view, "Data berhasil dihapus!");
+                        loadTable();
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(view, "Pilih data di tabel yang ingin dihapus terlebih dahulu!", "Peringatan", JOptionPane.WARNING_MESSAGE);
+                }
             }
         });
 
@@ -94,10 +129,8 @@ public class BarangController {
 
     // Method mengambil data dari Model dan menampilkannya di Tabel View
     private void loadTable() {
-        // Bersihkan tabel terlebih dahulu
         view.getTableModel().setRowCount(0);
 
-        // Ambil list data barang dari database (via Model)
         List<Barang> listBarang = Barang.getAllBarang();
 
         // Masukkan data ke dalam tabel

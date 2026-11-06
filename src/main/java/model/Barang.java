@@ -109,4 +109,13 @@ public class Barang {
         db.disconnect();
         return daftarBarang;
     }
+
+    // 3. Operasi Delete
+    public static void deleteBarang(String id) {
+        Database db = new Database();
+        db.connect();
+        String sql = "DELETE FROM barang WHERE id_barang = '" + id + "'";
+        db.query(sql);
+        db.disconnect();
+    }
 }
