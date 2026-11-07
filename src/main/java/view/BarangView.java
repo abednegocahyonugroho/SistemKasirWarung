@@ -13,7 +13,7 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
-public class BarangView extends JFrame {
+public class BarangView extends JFrame implements IBarangView {
 
     // Komponen Input
     private JTextField textIdBarang, textNamaBarang, textHarga, textStok, textBatasMin;
@@ -116,5 +116,9 @@ public class BarangView extends JFrame {
 
     public void addClearListener(ActionListener listener) {
         btnClear.addActionListener(listener);
+    }
+
+    public void addTableMouseListener(java.awt.event.MouseAdapter listener) {
+        table.addMouseListener(listener);
     }
 }

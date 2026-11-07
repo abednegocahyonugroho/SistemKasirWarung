@@ -9,6 +9,9 @@ package main;
  * @author abedn
  */
 import view.BarangView;
+import view.IBarangView;
+import model.IBarangService;
+import service.BarangService;
 import controller.BarangController;
 import javax.swing.SwingUtilities;
 
@@ -18,14 +21,12 @@ public class Main {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                // 1. Buat View
-                BarangView view = new BarangView();
+                IBarangView view = new BarangView();
+                IBarangService service = new BarangService();
 
-                // 2. Buat Controller dan masukkan View ke dalamnya
-                new BarangController(view);
+                new BarangController(view, service);
 
-                // 3. Tampilin View
-                view.setVisible(true);
+                ((BarangView) view).setVisible(true);
             }
         });
     }
